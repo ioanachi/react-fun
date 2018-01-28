@@ -14,6 +14,11 @@ module.exports = {
     filename: 'bundle.js'
   },
   plugins: [
+  new webpack.optimize.CommonsChunkPlugin({
+    name: 'commons',
+    filename: 'commons.js',
+    minChunks: 2,
+  }),
     new BrowserSyncPlugin({
       host: 'localhost',
       port: 3000,
@@ -35,6 +40,14 @@ module.exports = {
             presets: ['es2015']
           },
         }],
+      },
+      { test: /\.jsx?$/,
+        loader: 'babel-loader',
+        query:{
+          presets: ['react'],
+          compact:false
+        },
+        exclude: '/node_modules/'
       },
       {
         test: /\.css$/,
